@@ -2,13 +2,13 @@
 pragma solidity ^0.8.9;
 
 import "../node_modules/@openzeppelin/contracts/utils/Counters.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 import "../node_modules/hardhat/console.sol";
 
 import "./libraries/Base64.sol";
 
-contract EIP721NFT is ERC721 {
+contract EIP721NFT is ERC721URIStorage {
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -22,6 +22,7 @@ contract EIP721NFT is ERC721 {
     function mintNFT() public {
         uint newTokenId = _tokenIds.current();
         _safeMint(msg.sender, newTokenId);
+        _setTokenURI(newTokenId, "test");
 
         _tokenIds.increment();
 
